@@ -27,7 +27,7 @@
 - **Framework:** Spring Boot 3.x, Spring Security
 - **Data Access:** Spring Data JPA
 - **Database:** MySQL 8.4.9
-- **Build Tool:** Gradle
+- **Build Tool:** Maven
 
 ### Frontend
 
