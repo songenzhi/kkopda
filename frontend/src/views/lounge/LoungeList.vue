@@ -10,7 +10,8 @@
         v-model="newRoomName"
         @keyup.enter="createRoom"
         placeholder="새로운 방 이름을 입력하세요"
-        class="room-input" />
+        class="room-input"
+      />
       <button @click="createRoom" class="btn-create">방 만들기</button>
     </div>
 
@@ -21,7 +22,8 @@
         v-for="room in chatRooms"
         :key="room.roomId"
         class="room-card"
-        @click="enterRoom(room.roomId)">
+        @click="enterRoom(room.roomId)"
+      >
         <div class="room-info">
           <h3>{{ room.name }}</h3>
         </div>
@@ -44,8 +46,10 @@ import {
   createRoom as createRoomApi,
   deleteRoomById,
 } from '@/api/lounge';
+import { useUserStore } from '@/stores/userStore';
 
 const router = useRouter();
+const userStore = useUserStore();
 
 const chatRooms = ref([]);
 const newRoomName = ref('');
@@ -67,6 +71,12 @@ const createRoom = async () => {
     return;
   }
 
+  if (!userStore.isLogin) {
+    alert('로그인이 필요한 서비스입니다.');
+    router.push('/login');
+    return;
+  }
+
   try {
     await createRoomApi(newRoomName.value); // 💡 여기서도 함수 하나로 끝!
 
@@ -83,10 +93,21 @@ onMounted(() => {
 
 const enterRoom = (roomId) => {
   // 💡 선택한 방의 ID를 파라미터로 담아 채팅창(ChatView)으로 이동
+  if (!userStore.isLogin) {
+    alert('로그인이 필요한 서비스입니다.');
+    router.push('/login');
+    return;
+  }
+
   router.push(`/lounge/${roomId}`);
 };
 
 const deleteRoom = async (roomId) => {
+  if (!userStore.isLogin) {
+    alert('로그인이 필요한 서비스입니다.');
+    router.push('/login');
+    return;
+  }
   if (confirm('정말로 이 채팅방을 삭제하시겠습니까?')) {
     try {
       await deleteRoomById(roomId);
@@ -178,21 +199,34 @@ const deleteRoom = async (roomId) => {
   font-size: 16px;
   color: #333;
 }
-.btn-enter {
-  padding: 8px 16px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-}
+.btn-enter,
 .btn-del {
-  padding: 8px 16px;
-  background-color: #ff4d4f;
-  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
   border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  margin-left: 8px;
+  transition: all 0.2s;
+}
+
+.btn-enter {
+  background: #f3f0ec;
+  color: #8c7b6e;
+}
+
+.btn-entern:hover {
+  background: #e2ddd9;
+  color: #3d2b1f;
+}
+
+.btn-del {
+  background: #fff0f0;
+  color: #e57373;
+}
+
+.btn-del:hover {
+  background: #ffe5e5;
+  color: #d32f2f;
 }
 </style>

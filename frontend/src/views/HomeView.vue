@@ -10,7 +10,8 @@
               type="text"
               v-model="searchQuery"
               placeholder="카페 이름을 검색하세요"
-              @keyup.enter="searchPlaces" />
+              @keyup.enter="searchPlaces"
+            />
             <button class="search-btn" @click="searchPlaces">🔍 검색</button>
           </div>
         </div>
@@ -63,31 +64,53 @@ const initMap = () => {
       const lat = latlng.getLat();
       const lng = latlng.getLng();
 
-      if (selectedMarker) {
-        selectedMarker.setMap(null);
-      }
+      const ps = new window.kakao.maps.services.Places();
 
-      selectedMarker = new window.kakao.maps.Marker({
-        position: latlng,
-        map: map,
-      });
+      ps.categorySearch(
+        'CE7', // 카페
+        (data, status) => {
+          if (
+            status !== window.kakao.maps.services.Status.OK ||
+            data.length === 0
+          ) {
+            // 주변에 카페가 없으면 아무것도 표시하지 않음
+            selectedPlace.value = null;
 
-      const geocoder = new window.kakao.maps.services.Geocoder();
-      geocoder.coord2Address(lng, lat, (result, status) => {
-        let addressName = '주소를 알 수 없는 위치';
-        if (status === window.kakao.maps.services.Status.OK) {
-          addressName = result[0].road_address
-            ? result[0].road_address.address_name
-            : result[0].address.address_name;
-        }
+            if (selectedMarker) {
+              selectedMarker.setMap(null);
+              selectedMarker = null;
+            }
 
-        selectedPlace.value = {
-          name: '직접 선택한 새로운 스팟',
-          address: addressName,
-          lat: lat,
-          lng: lng,
-        };
-      });
+            return;
+          }
+
+          const cafe = data[0];
+
+          const markerPosition = new window.kakao.maps.LatLng(cafe.y, cafe.x);
+
+          if (selectedMarker) {
+            selectedMarker.setMap(null);
+          }
+
+          selectedMarker = new window.kakao.maps.Marker({
+            position: markerPosition,
+            map: map,
+          });
+
+          selectedPlace.value = {
+            name: cafe.place_name,
+            address: cafe.road_address_name || cafe.address_name,
+            kakaoId: cafe.id,
+            lat: Number(cafe.y),
+            lng: Number(cafe.x),
+          };
+        },
+        {
+          location: latlng,
+          radius: 30,
+          sort: window.kakao.maps.services.SortBy.DISTANCE,
+        },
+      );
     });
 
     findMyPosition();

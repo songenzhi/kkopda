@@ -29,19 +29,22 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (
-      error.response &&
-      (error.response.status === 401 || error.response.status === 403)
-    ) {
+    const status = error.response?.status;
+
+    if (status === 401) {
       const userStore = useUserStore();
 
-      userStore.logout(); // ⭐ Pinia 상태 변경
-      sessionStorage.clear(); // 저장된 데이터 제거
+      userStore.logout();
+      sessionStorage.clear();
 
       if (window.location.pathname !== '/login') {
-        alert('세션이 만료되었거나 접근 권한이 없습니다. 다시 로그인해주세요.');
+        alert('세션이 만료되었습니다. 다시 로그인해주세요.');
         window.location.href = '/login';
       }
+    } else if (status === 403) {
+      alert('접근 권한이 없습니다.');
+      // 필요하다면 다른 페이지로 이동
+      // window.location.href = '/';
     }
 
     return Promise.reject(error);

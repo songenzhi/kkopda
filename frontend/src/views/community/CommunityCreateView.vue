@@ -9,7 +9,8 @@
           id="title"
           v-model="post.title"
           type="text"
-          placeholder="나누고 싶은 이야기의 제목을 적어주세요." />
+          placeholder="나누고 싶은 이야기의 제목을 적어주세요."
+        />
       </div>
 
       <div class="input-section">
@@ -17,7 +18,8 @@
         <textarea
           id="content"
           v-model="post.description"
-          placeholder="따뜻한 소통을 위해 서로를 배려하는 마음을 담아주세요."></textarea>
+          placeholder="따뜻한 소통을 위해 서로를 배려하는 마음을 담아주세요."
+        ></textarea>
       </div>
 
       <div class="input-section">
@@ -27,7 +29,8 @@
           type="file"
           @change="handleFileChange"
           accept="image/*"
-          class="file-input" />
+          class="file-input"
+        />
       </div>
 
       <div class="actions">
@@ -82,8 +85,6 @@ const writePost = async () => {
       formData.append('imageFile', imageFile.value);
     }
 
-    // 🎯 수정 포인트 1: 중복된 axios.post를 지우고 깔끔하게 기존 API 함수만 호출합니다!
-    // 🎯 수정 포인트 2: 백엔드가 토큰을 통해 유저를 식별하므로 userId는 보내지 않아도 됩니다.
     await createCommunity(formData);
 
     alert('게시글이 성공적으로 등록되었습니다. ✨');

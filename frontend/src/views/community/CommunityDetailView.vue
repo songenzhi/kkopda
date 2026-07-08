@@ -16,7 +16,8 @@
           <img
             :src="'http://localhost:8080' + post.imageUrl"
             alt="첨부 이미지"
-            class="attached-image" />
+            class="attached-image"
+          />
         </div>
 
         <div class="text-content">
@@ -58,6 +59,7 @@ const postId = route.params.id; // URL에서 게시글 ID 추출
 const fetchPost = async () => {
   try {
     const res = await getCommunity(postId); // ID를 인자로 넘겨줌
+    console.log(res.data);
     post.value = res.data;
   } catch (error) {
     console.error(error);

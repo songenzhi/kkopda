@@ -44,13 +44,11 @@ const router = createRouter({
       path: '/cafes/create',
       name: 'cafesCreate',
       component: CafeCreateView,
-      // meta: { requiresAuth: true },
     },
     {
       path: '/cafes/:id/edit',
       name: 'cafesEdit',
       component: CafeEditView,
-      // meta: { requiresAuth: true },
     },
     {
       path: '/cafes/:id',
@@ -90,13 +88,12 @@ const router = createRouter({
     {
       path: '/lounge',
       name: 'Lounge',
-      component: LoungeList, // 👈 여기가 ChatView로 되어있으면 채팅창이 떠버립니다!
+      component: LoungeList,
     },
-    // 2. /lounge/방번호 주소 -> 채팅창(ChatView) 화면 연결
     {
-      path: '/lounge/:id', // :id는 방 번호 파라미터
+      path: '/lounge/:id',
       name: 'ChatView',
-      component: LoungeView, // 👈 여기엔 채팅창이 들어가야 합니다.
+      component: LoungeView,
     },
     {
       path: '/my',

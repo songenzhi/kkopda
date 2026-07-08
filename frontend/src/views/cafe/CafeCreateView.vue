@@ -18,7 +18,8 @@
             v-model="searchKeyword"
             placeholder="카페 이름을 검색하세요"
             @keyup.enter="searchPlaces"
-            class="premium-input" />
+            class="premium-input"
+          />
           <button @click="searchPlaces" class="search-icon-btn">🔍</button>
         </div>
 
@@ -27,7 +28,8 @@
             <li
               v-for="(place, index) in searchResults"
               :key="index"
-              @click="selectPlace(place)">
+              @click="selectPlace(place)"
+            >
               <div class="result-info">
                 <span class="place-name">{{ place.place_name }}</span>
                 <span class="place-addr">{{
@@ -87,7 +89,8 @@
           <button
             type="submit"
             class="premium-submit-btn"
-            :disabled="!cafe.name || !cafe.kakaoId">
+            :disabled="!cafe.name || !cafe.kakaoId"
+          >
             등록하기
           </button>
           <button type="button" class="text-cancel-btn" @click="router.back()">
@@ -151,25 +154,29 @@ const searchPlaces = () => {
   if (!searchKeyword.value.trim()) return;
 
   if (!window.kakao || !window.kakao.maps) {
-    alert(
-      '카카오 지도 SDK를 불러오지 못했습니다. 앱 키와 플랫폼 설정을 확인해주세요.',
-    );
+    alert('카카오 지도 SDK를 불러오지 못했습니다.');
     return;
   }
 
   window.kakao.maps.load(() => {
     const ps = new window.kakao.maps.services.Places();
 
-    ps.keywordSearch(searchKeyword.value, (data, status) => {
-      if (status === window.kakao.maps.services.Status.OK) {
-        searchResults.value = data;
-      } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
-        alert('검색 결과가 없습니다 🔍');
-        searchResults.value = [];
-      } else {
-        alert('검색 서비스에 문제가 발생했습니다.');
-      }
-    });
+    ps.keywordSearch(
+      searchKeyword.value,
+      (data, status) => {
+        if (status === window.kakao.maps.services.Status.OK) {
+          searchResults.value = data;
+        } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
+          alert('카페 검색 결과가 없습니다.');
+          searchResults.value = [];
+        } else {
+          alert('검색 서비스에 문제가 발생했습니다.');
+        }
+      },
+      {
+        category_group_code: 'CE7', // ☕ 카페만
+      },
+    );
   });
 };
 

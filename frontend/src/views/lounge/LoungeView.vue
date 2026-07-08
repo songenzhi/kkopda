@@ -22,7 +22,8 @@
         <div
           v-for="(msg, index) in messages"
           :key="index"
-          class="message-wrapper">
+          class="message-wrapper"
+        >
           <div v-if="msg.isSystem" class="system-message">
             <span>{{ msg.content }}</span>
           </div>
@@ -32,7 +33,8 @@
             :class="[
               'chat-bubble-group',
               msg.name === userName ? 'my-chat' : 'other-chat',
-            ]">
+            ]"
+          >
             <span class="chat-user" v-if="msg.name !== userName">{{
               msg.name
             }}</span>
@@ -49,7 +51,8 @@
           @keyup.enter="sendMessage"
           :disabled="!isConnected"
           placeholder="메시지를 입력하세요..."
-          class="styled-input" />
+          class="styled-input"
+        />
         <button @click="sendMessage" :disabled="!isConnected" class="btn-send">
           전송
         </button>
@@ -231,13 +234,23 @@ onBeforeUnmount(() => {
   min-width: 0;
 }
 .btn-leave {
-  flex-shrink: 0; /* 버튼 크기 고정 */
-  padding: 6px 18px;
-  background: #ff4d4f;
-  color: white;
-  border: none;
-  border-radius: 4px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
   cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-leave {
+  background: #fff0f0;
+  color: #e57373;
+}
+
+.btn-leave:hover {
+  background: #ffe5e5;
+  color: #d32f2f;
 }
 .divider {
   border: 0;
