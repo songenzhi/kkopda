@@ -1,13 +1,16 @@
 # ☕ kkopda (꼽다) - 사용자 맞춤형 카페 정보 & 커뮤니티 플랫폼
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Java_17-007396?style=for-the-badge&logo=java&logoColor=white">
-  <img src="https://img.shields.io/badge/Spring_Boot_3.x-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white">
-  <img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=spring-security&logoColor=white">
-  <img src="https://img.shields.io/badge/MySQL_8.4-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+  <img src="[https://img.shields.io/badge/Java_17-007396?style=for-the-badge&logo=java&logoColor=white](https://img.shields.io/badge/Java_17-007396?style=for-the-badge&logo=java&logoColor=white)">
+  <img src="[https://img.shields.io/badge/Spring_Boot_3.x-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white](https://img.shields.io/badge/Spring_Boot_3.x-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)">
+  <img src="[https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=spring-security&logoColor=white](https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=spring-security&logoColor=white)">
+  <img src="[https://img.shields.io/badge/MySQL_8.4-4479A1?style=for-the-badge&logo=mysql&logoColor=white](https://img.shields.io/badge/MySQL_8.4-4479A1?style=for-the-badge&logo=mysql&logoColor=white)">
   <br>
-  <img src="https://img.shields.io/badge/Vue.js_3-4FC08D?style=for-the-badge&logo=vuedotjs&logoColor=white">
-  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white">
+  <img src="[https://img.shields.io/badge/Vue.js_3-4FC08D?style=for-the-badge&logo=vuedotjs&logoColor=white](https://img.shields.io/badge/Vue.js_3-4FC08D?style=for-the-badge&logo=vuedotjs&logoColor=white)">
+  <img src="[https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)">
+  <a href="[https://app.notion.com/p/KKOPDA-34b5475c8e748005b186c653c7718d5b](https://app.notion.com/p/KKOPDA-34b5475c8e748005b186c653c7718d5b)" target="_blank">
+    <img src="[https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white)">
+  </a>
 </div>
 
 <br>
@@ -17,6 +20,9 @@
 **'kkopda(꼽다)'**는 콘센트, 와이파이, 주차 여부 등 사용자가 필요로 하는 맞춤형 카페 정보를 제공하고, 유저들 간 자유롭게 소통할 수 있는 커뮤니티 게시판과 실시간 채팅을 지원하는 웹 서비스입니다.
 
 단순한 기능 구현(CRUD)을 넘어, **JWT(JSON Web Token) 기반의 무상태(Stateless) 인증 아키텍처와 철저한 API 보안 설계**, **대용량 데이터 처리를 고려한 페이징(Pagination) 최적화**, 그리고 **웹소켓(WebSocket)을 활용한 실시간 통신** 등 웹 애플리케이션의 핵심 백엔드 이론을 실제 서비스에 견고하게 적용하는 데 집중하여 개발했습니다.
+
+### 📄 프로젝트 문서
+- 🔗 [kkopda 노션(Notion) 상세 페이지](https://app.notion.com/p/KKOPDA-34b5475c8e748005b186c653c7718d5b)
 
 <br>
 
@@ -108,14 +114,17 @@
 
 ```bash
 # Repository 클론
-$ git clone [https://github.com/songenzhi/kkopda.git](https://github.com/songenzhi/kkopda.git)
+$ git clone https://github.com/songenzhi/kkopda.git
 
 # MySQL 데이터베이스 생성 (기본 포트: 3306)
 CREATE DATABASE kkopja_db;
 
 # 프로젝트 빌드 및 실행
 $ ./gradlew bootRun
+```
 
+### Backend Setup
+```bash
 # 프론트엔드 디렉토리로 이동
 $ cd frontend
 
@@ -124,3 +133,4 @@ $ npm install
 
 # 개발 서버 실행 (기본 포트: 5173)
 $ npm run dev
+```
