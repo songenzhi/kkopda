@@ -1,4 +1,4 @@
-# ☕ kkopda (꼽다) - 사용자 맞춤형 카페 정보 & 커뮤니티 플랫폼
+# ☕ KKOPDA (꼽다) - 사용자 맞춤형 카페 정보 & 커뮤니티 플랫폼
 
 <div align="center">
   <img src="[https://img.shields.io/badge/Java_17-007396?style=for-the-badge&logo=java&logoColor=white](https://img.shields.io/badge/Java_17-007396?style=for-the-badge&logo=java&logoColor=white)">
@@ -17,7 +17,7 @@
 
 ## 📝 프로젝트 소개
 
-**'kkopda(꼽다)'**는 콘센트, 와이파이, 주차 여부 등 사용자가 필요로 하는 맞춤형 카페 정보를 제공하고, 유저들 간 자유롭게 소통할 수 있는 커뮤니티 게시판과 실시간 채팅을 지원하는 웹 서비스입니다.
+'KKOPDA(꼽다)'는 콘센트, 와이파이, 주차 여부 등 사용자가 필요로 하는 맞춤형 카페 정보를 제공하고, 유저들 간 자유롭게 소통할 수 있는 커뮤니티 게시판과 실시간 채팅을 지원하는 웹 서비스입니다.
 
 단순한 기능 구현(CRUD)을 넘어, **JWT(JSON Web Token) 기반의 무상태(Stateless) 인증 아키텍처와 철저한 API 보안 설계**, **대용량 데이터 처리를 고려한 페이징(Pagination) 최적화**, 그리고 **웹소켓(WebSocket)을 활용한 실시간 통신** 등 웹 애플리케이션의 핵심 백엔드 이론을 실제 서비스에 견고하게 적용하는 데 집중하여 개발했습니다.
 
