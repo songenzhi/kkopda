@@ -123,7 +123,7 @@ CREATE DATABASE kkopja_db;
 $ ./gradlew bootRun
 ```
 
-### Backend Setup
+### Frontend Setup
 ```bash
 # 프론트엔드 디렉토리로 이동
 $ cd frontend
