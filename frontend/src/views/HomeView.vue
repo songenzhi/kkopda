@@ -27,8 +27,9 @@
             <h3 class="place-name">{{ selectedPlace.name }}</h3>
             <p class="place-addr">📍 {{ selectedPlace.address }}</p>
             <div class="card-actions">
-              <button class="action-main-btn" @click="goToCreate">
-                이 스팟 등록하기
+              <!-- 🎯 버튼 텍스트와 클릭 이벤트를 길찾기로 변경 -->
+              <button class="action-main-btn" @click="goToDirections">
+                🗺️ 카카오맵 길찾기
               </button>
             </div>
           </div>
@@ -73,19 +74,16 @@ const initMap = () => {
             status !== window.kakao.maps.services.Status.OK ||
             data.length === 0
           ) {
-            // 주변에 카페가 없으면 아무것도 표시하지 않음
             selectedPlace.value = null;
 
             if (selectedMarker) {
               selectedMarker.setMap(null);
               selectedMarker = null;
             }
-
             return;
           }
 
           const cafe = data[0];
-
           const markerPosition = new window.kakao.maps.LatLng(cafe.y, cafe.x);
 
           if (selectedMarker) {
@@ -131,17 +129,12 @@ const findMyPosition = () => {
   }
 };
 
-// 🎯 다시 원래 API(/api/cafes/nearby)로 복구했습니다! 이제 노란 마커가 정상적으로 뜹니다.
 const fetchNearbyCafes = async (lat, lon) => {
   try {
     const response = await api.get(
       `/cafes/nearby?lat=${lat}&lon=${lon}&radius=500`,
     );
 
-    // 서버 응답 구조 확인 (개발자 도구 콘솔창에서 확인)
-    console.log('서버 응답 데이터:', response.data);
-
-    // 응답이 배열인지 확인하는 방어 코드 추가
     const cafes = Array.isArray(response.data)
       ? response.data
       : response.data.content || [];
@@ -151,7 +144,6 @@ const fetchNearbyCafes = async (lat, lon) => {
       return;
     }
 
-    // 기존 마커 제거
     markers.forEach((marker) => marker.setMap(null));
     markers = [];
 
@@ -221,24 +213,23 @@ const searchPlaces = () => {
   });
 };
 
-const goToCreate = () => {
-  router.push({
-    path: '/cafes/create',
-    query: {
-      name: selectedPlace.value.name,
-      address: selectedPlace.value.address,
-      kakaoId: selectedPlace.value.kakaoId,
-      lat: selectedPlace.value.lat,
-      lng: selectedPlace.value.lng,
-    },
-  });
+// 🎯 기존 goToCreate를 카카오맵 길찾기로 연결하는 goToDirections로 변경
+const goToDirections = () => {
+  if (!selectedPlace.value) return;
+
+  const { name, lat, lng } = selectedPlace.value;
+  // 카카오맵 목적지 링크 형식: https://map.kakao.com/link/to/이름,위도,경도
+  const kakaoMapUrl = `https://map.kakao.com/link/to/${name},${lat},${lng}`;
+
+  // 새 탭에서 카카오맵 열기
+  window.open(kakaoMapUrl, '_blank');
 };
 
 onMounted(() => initMap());
 </script>
 
 <style scoped>
-/* 기존 스타일 유지 */
+/* 기존 스타일 그대로 유지됨 (생략 없이 원본 그대로 복사해두시면 됩니다) */
 .cafe-map-page {
   padding: 80px 20px;
   max-width: 1300px;
@@ -300,7 +291,6 @@ onMounted(() => initMap());
   z-index: -1;
 }
 
-/* 검색바 디자인 */
 .search-container {
   display: flex;
   justify-content: center;
@@ -341,7 +331,6 @@ onMounted(() => initMap());
   background: #a33f2c;
 }
 
-/* 지도 카드 디자인 */
 .map-container-wrapper {
   margin-top: 20px;
 }
@@ -363,7 +352,6 @@ onMounted(() => initMap());
   position: relative;
 }
 
-/* 🎯 새롭게 추가/수정된 정보 카드 및 버튼 디자인 */
 .place-info-card {
   position: absolute;
   bottom: 40px;
@@ -424,7 +412,6 @@ onMounted(() => initMap());
   box-shadow: 0 5px 10px rgba(187, 77, 57, 0.2);
 }
 
-/* 🎯 부드럽게 올라오는 애니메이션 (slide-up) */
 .slide-up-enter-active,
 .slide-up-leave-active {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
