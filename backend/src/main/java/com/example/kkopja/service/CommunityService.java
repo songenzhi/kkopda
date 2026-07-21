@@ -27,7 +27,7 @@ public class CommunityService {
     private final CommunityRepository communityRepository;
     private final UserRepository userRepository;
 
-    private final String uploadDir = "D:/projects/uploads/";
+    private final String uploadDir = "E:/projects/uploads/";
 
     // 커뮤니티 리스트 조회
     public Page<Community> findPage(int page, int size) {

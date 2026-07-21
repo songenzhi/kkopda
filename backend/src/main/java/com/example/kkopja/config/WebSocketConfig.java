@@ -20,6 +20,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/chat-app")
                 .setAllowedOrigins("http://localhost:5173") // '*' 대신 정확한 도메인 지정
-                .withSockJS(); // 💡 프론트엔드에서 SockJS를 사용하고 있다면 이게 꼭 필요합니다!
+                .withSockJS();
     }
 }

@@ -42,9 +42,6 @@ public class CafeService {
     }
 
     public Cafe createCafe(Cafe cafe) {
-        // 🚨 프론트에서 넘어온 kakaoId와 이름을 콘솔에 출력해서 눈으로 확인!
-        System.out.println("프론트에서 넘어온 카페 이름: [" + cafe.getName() + "]");
-        System.out.println("프론트에서 넘어온 kakaoId: [" + cafe.getKakaoId() + "]");
 
         // 저장 전 kakaoId로 중복 체크
         if (cafeRepository.findByKakaoId(cafe.getKakaoId()).isPresent()) {

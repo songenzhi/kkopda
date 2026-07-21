@@ -23,7 +23,6 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-// 🎯 1. 기본 주소를 "/api/cafes" 로 확정! (RESTful 설계의 정석입니다)
 @RequestMapping("/cafes")
 @CrossOrigin(origins = "http://localhost:5173")
 public class CafeController {
@@ -33,7 +32,7 @@ public class CafeController {
     private final CafeRepository cafeRepository;
     private final CongestionVoteService voteService;
 
-    // 🎯 2. 기본 주소가 /api/cafes 니까, 여기는 "/nearby"만 쓰면 합쳐져서 /api/cafes/nearby 가 됩니다.
+    // 근처 카페 조회
     @GetMapping("/nearby")
     public ResponseEntity<List<Cafe>> getNearbyCafes(
             @RequestParam double lat,
@@ -44,13 +43,12 @@ public class CafeController {
         return ResponseEntity.ok(nearbyCafes);
     }
 
-    // 🎯 3. 기본 주소가 /api/cafes 니까, 그대로 두면 합쳐져서 /api/cafes 가 됩니다. (리스트 조회 완벽 매칭!)
+    // 카페 목록 조회
     @GetMapping
     public ResponseEntity<Page<CafeResponseDto>> getCafes(
             @RequestParam(required = false) String keyword,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "12") int size)
-    {
+            @RequestParam(defaultValue = "12") int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id"));
         Page<Cafe> cafePage;
 
@@ -77,34 +75,34 @@ public class CafeController {
         return ResponseEntity.ok(responsePage);
     }
 
-    // 🔍 1. 상세 조회 -> 최종 주소: /api/cafes/{id}
+    // 카페 상세 조회
     @GetMapping("/{id}")
     public ResponseEntity<CafeDetailResponseDto> getCafeById(@PathVariable Integer id) {
         Cafe cafe = cafeService.getCafeById(id);
         return ResponseEntity.ok(new CafeDetailResponseDto(cafe));
     }
 
-    // ✍️ 2. 등록 -> 최종 주소: /api/cafes (POST)
+    // 카페 정보 등록
     @PostMapping
     public ResponseEntity<CafeResponseDto> createCafe(@RequestBody Cafe cafe) {
         Cafe savedCafe = cafeService.createCafe(cafe);
         return ResponseEntity.ok(new CafeResponseDto(savedCafe));
     }
 
-    // 🔄 3. 수정 -> 최종 주소: /api/cafes/{id} (PUT)
+    // 카페 정보 수정
     @PutMapping("/{id}")
     public ResponseEntity<CafeResponseDto> updateCafe(@PathVariable Integer id, @RequestBody Cafe cafe) {
         Cafe updatedCafe = cafeService.updateCafe(id, cafe);
         return ResponseEntity.ok(new CafeResponseDto(updatedCafe));
     }
 
-    // 삭제 -> 최종 주소: /api/cafes/{id} (DELETE)
+    // 카페 정보 삭제
     @DeleteMapping("/{id}")
     public void deleteCafe(@PathVariable Integer id) {
         cafeService.deleteCafe(id);
     }
 
-    // 🎯 중복 확인 -> 최종 주소: /api/cafes/check/{kakaoId}
+    // 카페 중복 검사
     @GetMapping("/check/{kakaoId}")
     public ResponseEntity<CafeResponseDto> checkDuplicate(@PathVariable String kakaoId) {
         Optional<Cafe> cafe = cafeService.findByKakaoId(kakaoId);

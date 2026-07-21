@@ -17,6 +17,7 @@ public class CongestionVoteController {
 
     private final CongestionVoteService voteService;
 
+    // 혼잡도 투표
     @PostMapping("/{cafeId}/congestion-votes")
     public ResponseEntity<String> vote(
             @PathVariable Integer cafeId,

@@ -4,6 +4,7 @@ import com.example.kkopja.entity.Cafe;
 import com.example.kkopja.repository.CafeRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -12,9 +13,12 @@ import org.springframework.web.client.RestTemplate;
 public class KakaoApiService {
 
     private final RestTemplate restTemplate = new RestTemplate();
-    private final ObjectMapper objectMapper = new ObjectMapper(); // 💡 JSON을 파싱해주는 마법의 도구!
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private final CafeRepository cafeRepository;
+
+    @Value("${kakao.api.key}")
+    private String kakaoApiKey;
 
     public KakaoApiService(CafeRepository cafeRepository) {
         this.cafeRepository = cafeRepository;
@@ -24,7 +28,7 @@ public class KakaoApiService {
         String url = "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + keyword + " 카페";
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "KakaoAK 5fb5b11a253d99d91bfcfb00667040ac");
+        headers.set("Authorization", "KakaoAK " + kakaoApiKey);
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         try {
@@ -38,7 +42,7 @@ public class KakaoApiService {
 
             System.out.println("====== 카카오 카페 데이터 추출 시작 ======");
 
-            // 2. 배열을 돌면서 데이터 추출
+            // 2. 배열을 돌면서 데이터 추출tm
             for (JsonNode node : documents) {
                 String kakaoId = node.path("id").asText(); // 진짜 카카오 고유 숫자 ID
                 String cafeName = node.path("place_name").asText();
@@ -47,7 +51,6 @@ public class KakaoApiService {
                     address = node.path("address_name").asText();
                 }
 
-                // 🎯 [핵심] 이제 오직 '진짜 카카오 ID' 하나로만 깔끔하게 중복 검사!
                 if (cafeRepository.findByKakaoId(kakaoId).isEmpty()) {
                     Cafe cafe = Cafe.builder()
                             .kakaoId(kakaoId)
