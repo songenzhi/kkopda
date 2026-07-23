@@ -23,4 +23,6 @@ public interface CafeRepository extends JpaRepository<Cafe, Integer> {
     List<Cafe> findNearbyCafes(@Param("lat") double lat,
                                @Param("lon") double lon,
                                @Param("radius") double radius);
+
+    boolean existsByName(String name);
 }

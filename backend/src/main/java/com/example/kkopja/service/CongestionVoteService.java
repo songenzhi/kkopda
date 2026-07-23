@@ -35,7 +35,7 @@ public class CongestionVoteService {
         Optional<CongestionVote> existingVote = voteRepository
                 .findByCafeAndUserAndCreatedAtAfter(cafe, user, oneHourAgo);
 
-        // ⭐ 3. 만약 존재한다면? 재투표 불가! 에러를 발생시킵니다.
+        // 3. 만약 존재한다면? 재투표 불가! 에러를 발생시킵니다.
         if (existingVote.isPresent()) {
             throw new IllegalStateException("이미 1시간 이내에 이 카페에 투표하셨습니다. 잠시 후 다시 시도해주세요.");
         }

@@ -41,10 +41,10 @@ public class CafeService {
         return cafe;
     }
 
+    // 카페 추가
     public Cafe createCafe(Cafe cafe) {
 
-        // 저장 전 kakaoId로 중복 체크
-        if (cafeRepository.findByKakaoId(cafe.getKakaoId()).isPresent()) {
+        if (cafeRepository.existsByName(cafe.getName())) {
             throw new RuntimeException("ALREADY_EXISTS");
         }
         return cafeRepository.save(cafe);

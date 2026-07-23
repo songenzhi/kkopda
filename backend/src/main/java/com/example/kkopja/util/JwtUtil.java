@@ -24,7 +24,7 @@ public class JwtUtil {
     public String generateToken(Integer userId, String email) {
         return Jwts.builder()
                 .setSubject(email)                 // 토큰의 주인 (이메일)
-                .claim("userId", userId)         // 커스텀 데이터 (유저 ID)
+                .claim("userId", userId)     // 커스텀 데이터 (유저 ID)
                 .setIssuedAt(new Date())           // 발행 시간
                 .setExpiration(new Date(System.currentTimeMillis() + expirationMs)) // 만료 시간
                 .signWith(key, SignatureAlgorithm.HS256) // 암호화 알고리즘과 키

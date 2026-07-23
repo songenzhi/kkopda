@@ -52,7 +52,6 @@ public class CommunityService {
         // 1. 첨부된 파일이 있는지 확인
         if (imageFile != null && !imageFile.isEmpty()) {
             // 2. 파일명 중복 방지를 위한 UUID 결합
-            // 🎯 바뀐 코드 (원본 이름에서 확장자(.png, .jpg)만 떼와서 영어/숫자로만 만듦!)
             String originalFilename = imageFile.getOriginalFilename();
 
             // 1. 파일 이름에서 마지막 '.' 위치를 찾아서 확장자만 추출 (예: ".png")
@@ -81,12 +80,11 @@ public class CommunityService {
         return communityRepository.save(community);
     }
 
-    // 🎯 커뮤니티 리스트 수정
+    // 커뮤니티 리스트 수정
     public Community updateCommunity(Integer id, CommunityUpdateDto dto, Integer loginUserId) throws IOException {
         Community existingCommunity = communityRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("해당 정보를 수정할 수 없습니다."));
 
-        // 🚨 방어막: 글 작성자의 ID와 현재 요청한 유저의 ID가 다르면 쫓아냄!
         if (!existingCommunity.getUser().getId().equals(loginUserId)) {
             throw new RuntimeException("남의 글은 수정할 수 없습니다!");
         }
@@ -133,7 +131,7 @@ public class CommunityService {
         return communityRepository.save(existingCommunity);
     }
 
-    // 🎯 커뮤니티 리스트 삭제
+    // 커뮤니티 리스트 삭제
     public void deleteCommunity(Integer id, Integer loginUserId) {
         Community existingCommunity = communityRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("해당 글을 찾을 수 없습니다."));

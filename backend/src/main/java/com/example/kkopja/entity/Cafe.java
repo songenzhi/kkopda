@@ -33,16 +33,13 @@ public class Cafe {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private String address;
 
-    @Column(name = "has_outlet", nullable = false)
+    @Column(name = "has_outlet")
     private Boolean hasOutlet;
 
-    @Column(nullable = false)
     private Boolean wifi;
 
-    @Column(nullable = false)
     private Boolean parking;
 
     @Column(name = "created_at")
@@ -54,11 +51,9 @@ public class Cafe {
     @Column(name = "longitude")
     private Double longitude;  // 경도 (X좌표)
 
-    // 🎯 추가할 옵션: cascade = CascadeType.REMOVE (또는 ALL), orphanRemoval = true
     @OneToMany(mappedBy = "cafe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CongestionVote> congestionVotes = new ArrayList<>();
 
-    // 💡 만약 카페에 '리뷰(Review)' 데이터도 달려있다면, 리뷰 쪽도 똑같이 설정해야 에러가 안 납니다!
     @OneToMany(mappedBy = "cafe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 

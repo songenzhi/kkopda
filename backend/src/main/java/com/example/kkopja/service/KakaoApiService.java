@@ -42,7 +42,7 @@ public class KakaoApiService {
 
             System.out.println("====== 카카오 카페 데이터 추출 시작 ======");
 
-            // 2. 배열을 돌면서 데이터 추출tm
+            // 2. 배열을 돌면서 데이터 추출
             for (JsonNode node : documents) {
                 String kakaoId = node.path("id").asText(); // 진짜 카카오 고유 숫자 ID
                 String cafeName = node.path("place_name").asText();

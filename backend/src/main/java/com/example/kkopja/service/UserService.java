@@ -40,7 +40,7 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("사용자 없음"));
     }
 
-    // 정보 수정 🚨 [이 메서드가 안전하게 변경되었습니다]
+    // 정보 수정
     @Transactional
     public User updateUser(Integer id, User user) {
 
@@ -61,7 +61,7 @@ public class UserService {
             existingUser.setNickname(user.getNickname());
         }
 
-        // 💡 핵심: 프론트엔드에서 비밀번호가 넘어오지 않으므로(null),
+        // 프론트엔드에서 비밀번호가 넘어오지 않으므로(null),
         // existingUser.setPassword(user.getPassword()); 코드를 지워서 기존 비밀번호를 그대로 보존합니다!
 
         // 4. 변경된 닉네임/이메일만 반영하여 DB에 저장합니다.
