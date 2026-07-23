@@ -10,11 +10,11 @@ public class CafeDetailResponseDto {
     private Long id;
     private String name;
     private String address;
-    private boolean hasOutlet;
+    private Boolean hasOutlet;
     private Double rating;
 
-    private boolean wifi;
-    private boolean parking;
+    private Boolean wifi;
+    private Boolean parking;
 
     private List<ReviewResponseDto> reviews;
 

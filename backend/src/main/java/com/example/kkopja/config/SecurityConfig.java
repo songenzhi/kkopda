@@ -39,11 +39,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/community/**",
-                                "/cafes/**",
                                 "/api/**",
                                 "/uploads/**",
                                 "/error"
                         ).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/cafes/**").permitAll()
                         .requestMatchers("/chat-app/**").permitAll()
                         .requestMatchers("/users/login", "/users/signup").permitAll()
                         .requestMatchers(HttpMethod.GET, "/lounge").permitAll()
